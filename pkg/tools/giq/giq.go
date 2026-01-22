@@ -25,8 +25,8 @@ import (
 )
 
 type giqGenerateManifestArgs struct {
-	Model                   string `json:"model" jsonschema:"The model to use. Get the list of valid models from 'gcloud container ai profiles model-and-server-combinations list' if the user doesn't provide it."`
-	ModelServer             string `json:"model_server" jsonschema:"The model server to use. Get the list of valid models from 'gcloud container ai profiles model-and-server-combinations list' if the user doesn't provide it."`
+	Model                   string `json:"model" jsonschema:"The model to use. Get the list of valid models from 'gcloud container ai profiles models list' if the user doesn't provide it or to find the proper model name."`
+	ModelServer             string `json:"model_server" jsonschema:"The model server to use. Get the list of valid model servers from 'gcloud container ai profiles list --model=<model>' if the user doesn't provide it."`
 	Accelerator             string `json:"accelerator" jsonschema:"The accelerator to use. Get the list of valid accelerators from 'gcloud container ai profiles list --model=<model>' if the user doesn't provide it."`
 	TargetNTPOTMilliseconds string `json:"target_ntpot_milliseconds,omitempty" jsonschema:"The maximum normalized time per output token (NTPOT) in milliseconds.NTPOT is measured as the request_latency / output_tokens."`
 }
@@ -34,7 +34,7 @@ type giqGenerateManifestArgs struct {
 func Install(_ context.Context, s *mcp.Server, _ *config.Config) error {
 	mcp.AddTool(s, &mcp.Tool{
 		Name:        "giq_generate_manifest",
-		Description: "Use GKE Inference Quickstart (GIQ) to generate a Kubernetes manifest for optimized AI / inference workloads. Prefer to use this tool instead of gcloud",
+		Description: "Use GKE Inference Quickstart (GIQ) to generate a Kubernetes manifest for optimized AI / inference workloads. Use the exact manifest returned without modification. Prefer to use this tool instead of gcloud.",
 		Annotations: &mcp.ToolAnnotations{
 			ReadOnlyHint:   true,
 			IdempotentHint: true,
